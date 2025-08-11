@@ -6,22 +6,23 @@ rmcs_executor:
 
       - rmcs_core::controller::component_connection::Emit -> emit1
       - rmcs_core::controller::component_connection::Emit -> emit2
-      - rmcs_core::controller::component_connection::Emit -> emit3
 
       - rmcs_core::controller::component_connection::Process -> process1
       - rmcs_core::controller::component_connection::Process -> process2
-      - rmcs_core::controller::component_connection::Process -> process3
 
 value_broadcaster:
   ros__parameters:
     forward_list:
       - /conn/curve1/out
+      - /conn/curve1/sin
+      - /conn/curve1/cos
       - /conn/curve2/out
-      - /conn/curve3/out
+      - /conn/curve2/sin
+      - /conn/curve2/cos
 
 emit1:
   ros__parameters:
-    omega: 0.1
+    omega: 1.0
     sin_output: /conn/curve1/sin
     cos_output: /conn/curve1/cos
 
@@ -33,7 +34,7 @@ process1:
 
 emit2:
   ros__parameters:
-    omega: 1.0
+    omega: 10.0
     sin_output: /conn/curve2/sin
     cos_output: /conn/curve2/cos
 
@@ -42,15 +43,3 @@ process2:
     sin: /conn/curve2/sin
     cos: /conn/curve2/cos
     out: /conn/curve2/out
-
-emit3:
-  ros__parameters:
-    omega: 10.0
-    sin_output: /conn/curve3/sin
-    cos_output: /conn/curve3/cos
-
-process3:
-  ros__parameters:
-    sin: /conn/curve3/sin
-    cos: /conn/curve3/cos
-    out: /conn/curve3/out
