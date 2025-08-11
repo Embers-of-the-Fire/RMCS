@@ -98,4 +98,12 @@
   <class type="rmcs_core::referee::app::ui::Hero" base_class_type="rmcs_executor::Component">
     <description>Test plugin.</description>
   </class>
+
+  
+  <class type="rmcs_core::controller::component_connection::Emit" base_class_type="rmcs_executor::Component">
+    <description>Test test test and test plugin.</description>
+  </class>
+  <class type="rmcs_core::controller::component_connection::Process" base_class_type="rmcs_executor::Component">
+    <description>Test test test and test plugin.</description>
+  </class>
 </library>
