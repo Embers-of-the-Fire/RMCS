@@ -1,0 +1,35 @@
+rmcs_executor:
+  ros__parameters:
+    update_rate: 1000.0
+    components:
+      - rmcs_core::broadcaster::ValueBroadcaster -> value_broadcaster
+
+      - rmcs_core::custom_filter::generator::Generator -> generator
+      - rmcs_core::custom_filter::filter::Filter -> filter_median
+      - rmcs_core::custom_filter::filter::Filter -> filter_low_pass
+
+value_broadcaster:
+  ros__parameters:
+    forward_list:
+      - /gen
+      - /out/median
+      - /out/low_pass
+
+generator:
+  ros__parameters:
+    amplitude: 1.0
+    output: /gen
+
+filter_median:
+  ros__parameters:
+    filter: median
+    window_size: 5
+    input: /gen
+    output: /out/median
+
+filter_low_pass:
+  ros__parameters:
+    filter: low-pass
+    alpha: 0.1
+    input: /gen
+    output: /out/low_pass
