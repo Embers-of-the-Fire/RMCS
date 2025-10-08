@@ -1,0 +1,15 @@
+rmcs_executor:
+  ros__parameters:
+    update_rate: 1000.0
+    components:
+      - rmcs_core::identifier::IdentifierController -> identifier_controller
+
+identifier_controller:
+  ros__parameters:
+    exposure: 500
+    gain: 00.0
+    # blue
+    # hsv_lower: [100.0, 100.0, 100.0]
+    # hsv_upper: [255.0, 255.0, 255.0]
+    hsv_lower: [0.0, 100.0, 100.0]
+    hsv_upper: [100.0, 255.0, 200.0]

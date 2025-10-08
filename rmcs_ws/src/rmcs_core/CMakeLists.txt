@@ -5,16 +5,19 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c11")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-packed-bitfield-compat")
+add_compile_options(-Wno-deprecated-enum-enum-conversion)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-O2 -Wall -Wextra -Wpedantic)
 endif()
 
 find_package (ament_cmake_auto REQUIRED)
+find_package(OpenCV 4.5 REQUIRED)
 ament_auto_find_build_dependencies ()
 
 file (GLOB_RECURSE PROJECT_SOURCE CONFIGURE_DEPENDS
   ${PROJECT_SOURCE_DIR}/src/*.cpp
+  ${PROJECT_SOURCE_DIR}/src/*.cc
   ${PROJECT_SOURCE_DIR}/src/*.c
 )
 
@@ -26,10 +29,13 @@ ament_auto_add_library (
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/librmcs)
+include_directories(${OpenCV_INCLUDE_DIRS})
+
+target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} -lpthread)
 
 include_directories(SYSTEM "/usr/include/libusb-1.0")
-
 target_link_libraries(${PROJECT_NAME} -lusb-1.0)
+target_link_libraries(${PROJECT_NAME} ${PROJECT_SOURCE_DIR}/../../install/lib/libhikcamera.so)
 
 pluginlib_export_plugin_description_file(rmcs_executor plugins.xml)
 
